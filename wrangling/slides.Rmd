@@ -5,6 +5,7 @@ output:
   ioslides_presentation:
     incremental: false
     transition: slower
+    widescreen: true
     css: slides.css
 #runtime: shiny
 bibliography      : ["../refs/references.bib"]
@@ -12,6 +13,10 @@ bibliography      : ["../refs/references.bib"]
 
 <style>
 .forceBreak { -webkit-column-break-after: always; break-after: column; }
+
+slides > slide.backdrop {
+  background: white;
+}
 
 div.footnotes {
   position: absolute;
@@ -96,6 +101,7 @@ Collection of R packages for data science that share:
 
 
 <p class="forceBreak"></p>
+
 ```{r fig.align='right', out.width="75%", echo = F}
 knitr::include_graphics("../gfx/tidyverse-logo.png")
 ```
@@ -900,9 +906,7 @@ pivot_wider(bk_long,
 bk_long
 ```
 
-
 <p class="forceBreak"></p>
-
 
 ```{r}
 pivot_wider(bk_long, 
@@ -910,6 +914,7 @@ pivot_wider(bk_long,
             values_from = rt, 
             names_prefix = "rt_")
 ```
+
 
 
 ## Pivoting data
@@ -938,15 +943,15 @@ inner_join(data_1, data_2)
 ## Combine data: `bind_cols()` {.columns-2}
 
 ```{r}
-blomkvist_id_age <- select(blomkvist, id, age)
-blomkvist_id_age
+bk_id_age <- select(blomkvist, id, age)
+bk_id_age
 ```
 
 <p class="forceBreak"></p>
 
 ```{r}
-blomkvist_med_smoke <- select(blomkvist, medicine, smoker)
-blomkvist_med_smoke
+bk_med_smoke <- select(blomkvist, medicine, smoker)
+bk_med_smoke
 ```
 
 
@@ -954,33 +959,33 @@ blomkvist_med_smoke
 
 ```{r}
 # Combine two datasets side-by-side
-bind_cols(blomkvist_id_age, blomkvist_med_smoke)
+bind_cols(bk_id_age, bk_med_smoke)
 ```
 
 
 ## Combine data: `bind_rows()`
 
 ```{r}
-blomkvist_former_smokers <- filter(blomkvist, smoker == "former")
-blomkvist_smokers <- filter(blomkvist, smoker == "yes")
+bk_former_smokers <- filter(blomkvist, smoker == "former")
+bk_smokers <- filter(blomkvist, smoker == "yes")
 ```
 
 ## Combine data: `bind_rows()`
 
 ```{r}
 # Stacking two data sets
-blomkvist_smoking <- bind_rows(blomkvist_former_smokers, blomkvist_smokers)
+bk_smoking <- bind_rows(bk_former_smokers, bk_smokers)
 ```
 
 ## Combine data: `bind_rows()`
 
 
 ```{r}
-slice_head(blomkvist_smoking, n = 2)
+slice_head(bk_smoking, n = 2)
 ```
 
 ```{r}
-slice_tail(blomkvist_smoking, n = 2)
+slice_tail(bk_smoking, n = 2)
 ```
 
 - even works when columns are not in the same order as long as the names and types match
@@ -990,59 +995,94 @@ slice_tail(blomkvist_smoking, n = 2)
 ## Create two example data sets
 
 ```{r}
-blomkvist_smoker <- select(blomkvist, smoker, age)
-blomkvist_smoker_o40 <- filter(blomkvist_smoker, age > 40)
+bk_smoker <- select(blomkvist, smoker, age)
+bk_smoker_o40 <- filter(bk_smoker, age > 40)
 ```
 
 ```{r}
-blomkvist_sex <- select(blomkvist, sex, age)
-blomkvist_sex_u50 <- filter(blomkvist_sex, age < 50)
+bk_sex <- select(blomkvist, sex, age)
+bk_sex_u50 <- filter(bk_sex, age < 50)
 ```
 
 ## Create two example data sets {.columns-2}
 
 ```{r}
-blomkvist_smoker_o40
+bk_smoker_o40
 ```
 
 <p class="forceBreak"></p>
 
 ```{r}
-blomkvist_sex_u50
+bk_sex_u50
 ```
 
 
-## Combine data: `left_join()`
+## Combine data: `left_join()` {.columns-2}
 
 
 ```{r}
-# Keep all rows of blomkvist_sex_u50
-left_join(blomkvist_sex_u50, blomkvist_smoker_o40, by = "age")
+# Keep all rows of bk_sex_u50
+bk_joined <- left_join(bk_sex_u50, 
+                       bk_smoker_o40, by = "age")
+bk_joined
 ```
 
-## Combine data: `right_join()`
+<p class="forceBreak"></p>
 
 ```{r}
-# Keep all rows of blomkvist_smoker_o40
-right_join(blomkvist_sex_u50, blomkvist_smoker_o40, by = "age")
+range(bk_joined$age)
 ```
 
-## Combine data: `full_join()`
+
+## Combine data: `right_join()` {.columns-2}
+
+```{r}
+# Keep all rows of bk_smoker_o40
+bk_joined <- right_join(bk_sex_u50, 
+                        bk_smoker_o40, by = "age")
+bk_joined
+```
+
+<p class="forceBreak"></p>
+
+```{r}
+range(bk_joined$age)
+```
+
+
+## Combine data: `full_join()` {.columns-2}
 
 ```{r}
 # Include all rows of both data sets
-full_join(blomkvist_sex_u50, blomkvist_smoker_o40, by = "age")
+bk_joined <- full_join(bk_sex_u50, 
+                       bk_smoker_o40, by = "age")
+bk_joined
 ```
-## Combine data: `inner_join()`
+
+<p class="forceBreak"></p>
+
+```{r}
+range(bk_joined$age)
+```
+
+## Combine data: `inner_join()` {.columns-2}
 
 ```{r}
 # Include only info that is present in both data sets
-inner_join(blomkvist_sex_u50, blomkvist_smoker_o40, by = "age")
+bk_joined <- inner_join(bk_sex_u50, 
+                        bk_smoker_o40, by = "age")
+bk_joined
+```
+
+<p class="forceBreak"></p>
+
+```{r}
+range(bk_joined$age)
 ```
 
 ## Combing data
 
-- Continue with exercise 8
+Continue with exercise 8
 
 
 
@@ -1100,23 +1140,28 @@ data %>%
 ```
 
 
-## The pipe: `%>%`
+## The pipe: `%>%` {.columns-2}
+
 
 ```{r}
-# (Almost) everything we did before in one go.
-read_csv("../data/blomkvist.csv") %>% select(id, starts_with("rt_")) %>%
-  pivot_longer(-id, names_to = c(".value", "response_by", "dominant"), 
-                    names_pattern = "(.+)_(.+)_(.+)") %>%
-  filter(rt < quantile(rt, probs = .975, na.rm = TRUE)) %>% 
-  mutate(across(dominant, recode, d = "dominant", nd = "non-dominant")) %>%
-  group_by(response_by, dominant) %>%
-  summarise(across(rt, list(mean = mean, median = median, sd = sd), na.rm = TRUE)) %>% 
-  ungroup()
+bk <- read_csv("../data/blomkvist.csv")
+bk_rts <- select(bk, id, starts_with("rt_"))
+bk_rts_flt <- filter(bk_rts, rt_hand_d > 1500)
+bk_rts_flt
 ```
+
+<p class="forceBreak"></p>
+
+```{r}
+read_csv("../data/blomkvist.csv") %>% 
+  select(id, starts_with("rt_")) %>% 
+  filter(rt_hand_d > 1500)
+```
+
 
 ## The pipe: `%>%`
 
-- Continue with exercise 9
+Continue with exercise 9
 
 
 ## Recommended reading {.columns-2}
@@ -1126,7 +1171,7 @@ read_csv("../data/blomkvist.csv") %>% select(id, starts_with("rt_")) %>%
 
 <p class="forceBreak"></p>
 
-```{r fig.align='right', out.width="70%", echo = F}
+```{r fig.align='right', out.width="65%", echo = F}
 knitr::include_graphics("../gfx/wickham.jpg")
 ```
 

@@ -2,37 +2,62 @@
 library(tidyverse)
 
 # Import data as tibble
-data <- read_csv("data/prowrite-4-tasks.csv")
+blomkvist <- read_csv("data/blomkvist.csv")
 
-# Select the following variables: ppt, task, location, next_event_type, event_duration
-data <- select(data, ppt, task, location, next_event_type, event_duration)
+# Select the following variables: id, age, all rt measures
+blomkvist <- select(blomkvist, id, ---)
 
-# Changing the format of data from long to wide and back.
+# Changing the format of data from wide to long and back.
+# We want all rts in one column as specified in cols:
+blomkvist_long <- pivot_longer(blomkvist, cols = ---)
 
-# Before, we need to aggregate the data a little (for practical reasons, really).
+# Check out the resulting data format
+blomkvist_long
 
+# Transform this back to wide format
+pivot_wider(---, names_from = "name", values_from = "value")
+
+# That's all really. Everything else is only cosmetic.
+
+# We can change the names of the resulting "name" and "value" columns:
+# cols is the same as above.
+# Set names_to to "group" and values_to to "rt
+pivot_longer(blomkvist, 
+             cols = ---, 
+             names_to = ---, 
+             values_to = ---)
+
+# In the data, rt_hand/foot_n/nd decodes the rt of dominant and non-dominant hand and foot.
+# It would make sense to store hand/foot and n/nd in two different columns.
+# Hence, we would get three new columns (rt, hand/foot, dominant/non-dominant).
+# The current column name can be seperated into the new columns:
+blomkvist_long <- pivot_longer(---, 
+                               cols = ---, 
+                               names_to = c(".value", "response_by", "dominant"),
+                               names_pattern = "(.+)_(.+)_(.+)") # check out what happens if you remove "+"
+
+# .value indicates that the value name comes the first part of the current column name
+# which is "rt" for all four columns.
+
+# And back to long format:
+pivot_wider(---, # needs to be the last long data 
+            names_from = c("response_by", "dominant"), 
+            values_from = ---, # name of the reaction time column
+            names_prefix = "rt_") # this is optional
+
+# Summarise data for the next trick:
 # Group data
-data_grouped <- group_by(data, ppt, task, location) 
+blomkvist_grouped <- group_by(blomkvist_long, response_by, dominant) 
 
-# Summarise data by group
-data_summarised <- summarise(data_grouped, mean_dur = mean(event_duration))
+# Summarise data
+blomkvist_summary <- summarise(blomkvist_grouped, 
+                      across(rt, list(mean = mean, sd = sd),  na.rm = TRUE))
 
-# Ungroup data!!!
-data_summarised <- ungroup(data_summarised)
+# Ungroup data
+blomkvist_summary <- ungroup(blomkvist_summary)
 
-# The data has now one value (mean duration) per ppt x task x location
-data_summarised
-
-# Wide data format
-pivot_wider(data_summarised, names_from = task, values_from = mean_dur)
-
-# and back to long
-pivot_longer(data_wide, A:intervention, names_to = "task", values_to = "mean_dur")
-
-
-data_wide <- pivot_wider(data_summarised, names_from = task, values_from = mean_dur)
-
-# This is useful, for example, if you want to calculate the difference between tasks
-mutate(data_wide, diff_intervention = (A + B)/2 - intervention,
-                  diff_followup = followup - intervention)
-
+# Pivot is better than older reshaping functions because it can handle more than
+# one variable at once like so:
+pivot_wider(---, # needs to be the summary data set 
+            names_from = ---, # use dominant 
+            values_from = c(rt_mean, rt_sd))

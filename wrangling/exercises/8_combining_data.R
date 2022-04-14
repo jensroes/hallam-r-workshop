@@ -2,25 +2,18 @@
 library(tidyverse)
 
 # Import data as tibble
-data <- read_csv("data/prowrite-4-tasks.csv")
+blomkvist <- read_csv("data/blomkvist.csv")
 
 # Select variables
-data <- select(data, ppt, task, location, event_duration)
+blomkvist <- select(blomkvist, id, starts_with("rt_"))
+blomkvist <- select(blomkvist, id, starts_with("pal_"))
 
-# Create mini data as example (and nothing else; there are smarter ways of doing this).
-data_locs <- count(data, task, location, name = "n_locations")
-data_locs <- filter(data_locs, task != "A")
-data_events <- count(data, ppt, task, next_event_type, name = "n_events")
-
-# Check out example data
-data_locs
-data_events
 
 # Joining data sets
 # inner join:  includes all rows in first and second data set
 inner_join(data_locs, data_events)
 
-# full join includes all rows in in first or second data set.
+# full join includes all rows in both data set.
 full_join(data_locs, data_events)
 
 # left join includes all rows in first data set

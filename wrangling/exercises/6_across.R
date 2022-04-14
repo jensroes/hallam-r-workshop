@@ -13,18 +13,22 @@ blomkvist <- select(blomkvist, id, smoker, age, starts_with("rt"))
 # or
 # mutate(data, across(variables, ~function(.)))
 
-# Change the following calls using across()
+# Change the following calls using across().
+# Make sure you transform only the variable required by the code.
 # 1.
 mutate(blomkvist, rt_hand_d = log(rt_hand_d))
+
 mutate(blomkvist, across(---, ---))
 
 # 2.
 mutate(blomkvist, rt_hand_d = rt_hand_d^2)
+
 mutate(blomkvist, across(---, ~. ---))
 
 # 3.
 mutate(blomkvist, rt_hand_d = log(rt_hand_d),
                   rt_hand_nd = log(rt_hand_nd))
+
 mutate(blomkvist, across(---, ---))
 
 # 4.
@@ -32,6 +36,7 @@ mutate(blomkvist, rt_hand_d = log(rt_hand_d),
                   rt_hand_nd = log(rt_hand_nd),
                   rt_foot_d = log(rt_foot_d),
                   rt_foot_nd = log(rt_foot_nd))
+
 mutate(blomkvist, across(---, ---))
 
 # We want the rowwise means across all rt variables like so

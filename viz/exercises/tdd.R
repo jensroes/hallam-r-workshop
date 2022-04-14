@@ -1,10 +1,5 @@
-# To run a command click in the corresponding line and press CTRL + ENTER (Mac: CMD + ENTER).
-
 # Load tidyverse package (which includes ggplot2 and many other useful functions for data processing)
 library(tidyverse)
-
-# If you couldn't load tidyverse, run this:
-# install.packages("tidyverse")
 
 # Load data frame 
 tdd <- read_csv("data/tdd.csv")
@@ -12,22 +7,31 @@ tdd <- read_csv("data/tdd.csv")
 # Inspect data frame
 glimpse(tdd)
 
-# Summary
-summary(tdd)
-
-# First 10 rows 
-tdd
-
 # Get the mean and the standard deviation for each of the 13 data sets
 # Convince yourself that all dataset have the same mean and standard deviation for x and y.
 tdd %>% group_by(dataset) %>%
-  summarise_if(is.double, list(Mean = mean, SD = sd)) %>%
-  select(dataset, starts_with("x"), starts_with("y"))
+  summarise(across(c(x,y), 
+                   list(mean = mean, sd = sd)))
 
-# You can also run 13 linear regressions which show relatively similar (if not identical) relationships between y and x.
-map(1:13, ~lm(y ~ x, data = tdd, subset = dataset == .)) %>%
-  map(summary) %>% map("coefficients") 
-# For all data sets there is a negative relationship between x and y.
+# You can also run 13 linear regressions and correlations
+# which show relatively similar (if not identical) relationships between y and x.
+tdd %>% nest(data = c(x,y)) %>% 
+  mutate(x_mean = map(data, ~mean(.$x)),
+         x_sd = map(data, ~sd(.$x)),
+         y_mean = map(data, ~mean(.$y)),
+         y_sd = map(data, ~sd(.$y)),
+         model = map(data, ~lm(y ~ x, data = .)),
+         intercept = map(model, ~coef(.)[1]),
+         slope = map(model, ~coef(.)[2]),
+         cor = map(data, ~cor(.$y, .$x))) %>% 
+  select(-model, -data) %>%
+  unnest(-dataset) %>%
+  mutate(across(where(is.numeric), round, 2))
+
+# Don't worry if this code is confusing. It's just a concise way of running many
+# regression models in one go.
+# All that matters is that you can see that for all datasets, the estimates (mean, sd
+# intercept, slope, correlation coefficient) are virtually identical.
 
 # Regression lines illustrate this relationship for each of the 13 data sets.
 ggplot(data = tdd, aes(y = y, x = x)) +
@@ -36,7 +40,7 @@ ggplot(data = tdd, aes(y = y, x = x)) +
 
 # The last line in the previous code creates the regression line.
 # Task: Create a scatterplot with points instead of regression lines.
-# 1. Copy the previous code (all three lines) and paste it below.
-# 2. Remove the last line (i.e. geom_smooth(...))
-# 3. Add the following line to the code to create a scatter plot: geom_point(size = 0.5) 
-# 4. Convince yourself that the relationship between y and x are very different for each of the data sets.
+# Add the following line to the code below to create a scatter plot: geom_point(size = 0.5) 
+# Convince yourself that the relationship between y and x are very different for each of the data sets.
+ggplot(data = tdd, aes(y = y, x = x)) +
+  facet_wrap(~dataset, labeller = label_both) 
