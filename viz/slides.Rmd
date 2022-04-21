@@ -15,7 +15,6 @@ link-citations: yes
 
 
 ```{r setup, include=FALSE}
-library(citr)
 library(tidyverse)
 library(stringi)
 library(ggthemes)

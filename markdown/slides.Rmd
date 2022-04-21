@@ -1,0 +1,117 @@
+---
+title: 'Reproducible research using markdown documentation'
+author: "Jens Roeser"
+output: 
+  ioslides_presentation:
+    incremental: false
+    transition: slower
+    widescreen: true
+    css: slides.css
+bibliography      : ["../refs/references.bib"]
+---
+
+<style>
+.forceBreak { -webkit-column-break-after: always; break-after: column; }
+
+slides > slide.backdrop {
+  background: white;
+}
+
+div.footnotes {
+  position: absolute;
+  bottom: 0;
+  margin-bottom: 15px;
+  width: 80%;
+  font-size: 0.6em;
+}
+
+pre {
+  font-size: 15px;
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = TRUE, message = FALSE, comment=NA)
+options("kableExtra.html.bsTable" = T, digits = 2)
+options(pillar.print_min = 5, pillar.print_max = 6)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+```
+
+## R markdown
+
+- combination of text, (R)code, and data
+- quickly updating analysis
+- presentation of results in text, tables, figures
+- supplementary materials
+- producing texts, website, APA style manuscripts, slides
+- compiles via LaTeX into `.pdf`, `.html`, `.docx`, `.doc`
+- easy cross referencing
+- citations, reference lists
+
+## R-studio menu
+
+
+```{r eval = FALSE}
+install.packages("rmdformats")
+```
+
+or 
+
+```{r eval = FALSE}
+install.packages("remotes")
+remotes::install_github("juba/rmdformats")
+```
+
+
+- `File` > `New File` > `R Markdown`
+- Document (PDF, WORD, HTML)
+- from template: 
+  - e.g. `readthedown` or `robobook` for documents
+  - `rmdshower::shower_presentations` for slides
+
+## Documents
+- example: <https://rpubs.com/jensroes/765467>
+- create from template:
+  - `File` > `New File` > `R Markdown`
+  - `robobook`
+- online sharing on RPubs
+
+## Task
+
+- create a chunk (`CTRL + ALT + I`)
+- read in the @blomkvist2017reference data
+- create a long data format for reaction times
+- create a scatterplot for `rt` (y) and `age` (x) with different colours (colour, fill)
+for smoker and facet panels for hand / foot and dominant / non-dominant; log scale y-axis
+- show code for all chunks
+- omit code for data chunk from output
+- create section headers for every step above
+
+## APA manuscripts using `papaja`
+
+- example: <https://osf.io/vayhq/> published in @roeser2021modelling
+- installation: <https://github.com/crsh/papaja>
+  - `File` > `New File` > `R Markdown`
+  - "APA article (6th edition)" using `papaja`
+- template for APA7
+
+## Task
+
+- Reproduce analysis in `apa7_template.Rmd`
+- Redo analysis for either dominant or non-dominant hand or foot: change as little code as possible
+
+
+## References
+
+```{r eval = F, echo = F}
+<style>
+slides > slide { overflow: scroll; }
+slides > slide:not(.nobackground):after {
+  content: '';
+}
+</style>
+```
+
+

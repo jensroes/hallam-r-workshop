@@ -31,13 +31,20 @@ pivot_longer(blomkvist,
 # It would make sense to store hand/foot and n/nd in two different columns.
 # Hence, we would get three new columns (rt, hand/foot, dominant/non-dominant).
 # The current column name can be seperated into the new columns:
-blomkvist_long <- pivot_longer(---, 
-                               cols = ---, 
-                               names_to = c(".value", "response_by", "dominant"),
-                               names_pattern = "(.+)_(.+)_(.+)") # check out what happens if you remove "+"
+pivot_longer(---, 
+             cols = ---, 
+             names_to = c(".value", "response_by", "dominant"),
+             names_pattern = "(.+)_(.+)_(.+)") # check out what happens if you remove "+"
 
 # .value indicates that the value name comes the first part of the current column name
 # which is "rt" for all four columns.
+
+# Btw, here is the shortcut for variable names that follow systematic naming conventions.
+blomkvist_long <- pivot_longer(---, 
+                               cols = ---, 
+                               names_to = c(".value", "response_by", "dominant"),
+                               names_sep = "_") 
+
 
 # And back to long format:
 pivot_wider(---, # needs to be the last long data 

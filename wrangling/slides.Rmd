@@ -29,6 +29,7 @@ div.footnotes {
 pre {
   font-size: 15px;
 }
+
 </style>
 
 
@@ -37,12 +38,9 @@ pre {
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, eval = TRUE, message = FALSE, comment=NA)
 options("kableExtra.html.bsTable" = T, digits = 2)
 options(pillar.print_min = 5, pillar.print_max = 6)
-library(shiny)
 library(tidyverse)
-library(psyntur)
 library(knitr)
 library(kableExtra)
-library(patchwork)
 ```
 
 
@@ -135,7 +133,7 @@ knitr::include_graphics("../gfx/tidyverse-package-workflow.png")
 ```
 
 
-## tidy data 
+## Tidy data 
 
 ```{r fig.align='center', out.width="90%", echo = F}
 knitr::include_graphics("../gfx/tidy_1.png")
@@ -145,7 +143,7 @@ knitr::include_graphics("../gfx/tidy_1.png")
 - Each observation must have its own row.
 - Each value have its own cell.
 
-## WHy?
+## Why?
 
 ```{r fig.align='center', out.width="90%", echo = F}
 knitr::include_graphics("../gfx/tidy_1.png")
@@ -181,7 +179,7 @@ knitr::include_graphics("../gfx/sc2b.jpeg")
 ```
 
 - Real-time strategy video game
-
+- Nintendo Wii Balance Board
 
 <p class="forceBreak"></p>
 
@@ -1178,13 +1176,5 @@ knitr::include_graphics("../gfx/wickham.jpg")
 
 ## References
 
-```{r eval = F, echo = F}
-<style>
-slides > slide { overflow: scroll; }
-slides > slide:not(.nobackground):after {
-  content: '';
-}
-</style>
-```
 
 
