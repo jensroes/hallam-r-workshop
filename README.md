@@ -1,4 +1,4 @@
-# hallam-r-workshop
+# R Workshop @ Sheffield Hallam University
 Workshop materials for workshop at Sheffiel Hallam: data viz, data wrangling, R markdown
 
 ## Slides 
