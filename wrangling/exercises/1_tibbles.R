@@ -43,7 +43,8 @@ glimpse(---) # like str() but better
 # Second argument is the name of the file you want to save the data to.
 # There is no need to do this now but sometimes you want to save
 # a copy of the processed data. 
-# Make sure you don't overwrite the original data though (use a new name).
+# Make sure you don't overwrite the original data though (use a new name 
+# like "mydata").
 write_csv(---, "data/mydata.csv")
 
 # Open the data in a spreadsheet to check if it has worked.

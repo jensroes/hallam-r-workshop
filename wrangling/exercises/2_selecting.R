@@ -16,22 +16,28 @@ select(blomkvist, -medicine)
 # Select multiple variables
 select(blomkvist, ends_with("_d"))
 
+# or
 select(blomkvist, age, starts_with("rt_"))
 
 # Remove multiple variable
 select(blomkvist, -contains("hand_"))
 
 # Use where() to remove all variables that are of the type character (is.character).
+select(blomkvist, where(---))
 
 # Tasks:
-# Select the following variables: id, medicine, pal_work, pal_leisure
+# Without spelling out every variable, ...
+# select the following variables: id, medicine, pal_work, pal_leisure
+select(blomkvist, ---)
+
+# select the first 4 variables
 select(---)
 
-# Select the first 4 variables
+# remove all rt_ variables
+select(---)
 
-# Remove all rt_ variables
-
-# Remove all foot rt data
+# remove all foot rt data
+select(---)
 
 # Assign the tibble with id and all rt_ variables to a new variable.
 --- <- select(---)
@@ -42,6 +48,7 @@ glimpse(---)
 # Use can rename variables while selecting them like so:
 # select(data, new_name = old_name, var2, var3)
 # Use select to keep id and all rt_ variables and rename id to ppt.
+select(---)
 
 # You can save your new data in csv format using:
 write_csv(---, "data/name_of_target_file.csv")

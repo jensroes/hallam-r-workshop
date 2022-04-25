@@ -42,12 +42,13 @@ unique(blomkvist$---)
 # Only non-smokers and former smokers
 filter(blomkvist, --- %in% c(---, ---))
 
-# Only smokers whose age is above the average age of this sample
-filter(blomkvist, --- == ---, --- > ---(---, na.rm = TRUE))
+# Only smokers whose age is above the median age of this sample
+filter(blomkvist, --- == ---, 
+                  --- > ---(---, na.rm = TRUE))
 
 # Assign the result to a new data variable called "blomkvist_filtered".
 # Conditions are: rts are smaller than 500, or larger 1250, age is younger than 40,
-# and only smokers and non-smokers.
+# and only smokers and non-smokers (not former smokers)
 --- <- filter(---, ---)
 
 # Inspect new data variable using glimpse

@@ -42,16 +42,16 @@ library(kableExtra)
 ## R markdown
 
 - combination of text, (R)code, and data
-- quickly updating analysis
-- presentation of results in text, tables, figures
-- supplementary materials
-- producing texts, website, APA style manuscripts, slides
-- compiles via LaTeX into `.pdf`, `.html`, `.docx`, `.doc`
-- easy cross referencing
-- citations, reference lists
+- documentation of all analysis steps (for us and our readers)
+- quickly updating and repeating analysis
+- communication of analysis / results 
+- producing texts, website, supplementary materials, walkthroughs, APA style manuscripts, slides
+- easy cross referencing of tables and figures, citations 
+- automatically compiling reference lists
+- compiles into `.pdf`, `.html`, `.docx`, `.doc`
+- some knowledge of LaTeX useful for cross-referencing, using additional features (LaTeX add-ons), writing equations 
 
-## R-studio menu
-
+## Setup
 
 ```{r eval = FALSE}
 install.packages("rmdformats")
@@ -64,6 +64,7 @@ install.packages("remotes")
 remotes::install_github("juba/rmdformats")
 ```
 
+## From the R-Studio menu ...
 
 - `File` > `New File` > `R Markdown`
 - Document (PDF, WORD, HTML)
@@ -72,22 +73,13 @@ remotes::install_github("juba/rmdformats")
   - `rmdshower::shower_presentations` for slides
 
 ## Documents
+
 - example: <https://rpubs.com/jensroes/765467>
+- online sharing on RPubs ("Publish")
 - create from template:
   - `File` > `New File` > `R Markdown`
   - `robobook`
-- online sharing on RPubs
-
-## Task
-
-- create a chunk (`CTRL + ALT + I`)
-- read in the @blomkvist2017reference data
-- create a long data format for reaction times
-- create a scatterplot for `rt` (y) and `age` (x) with different colours (colour, fill)
-for smoker and facet panels for hand / foot and dominant / non-dominant; log scale y-axis
-- show code for all chunks
-- omit code for data chunk from output
-- create section headers for every step above
+- we'll develop a `robobook` markdown together with all fundamental features
 
 ## APA manuscripts using `papaja`
 
@@ -95,7 +87,7 @@ for smoker and facet panels for hand / foot and dominant / non-dominant; log sca
 - installation: <https://github.com/crsh/papaja>
   - `File` > `New File` > `R Markdown`
   - "APA article (6th edition)" using `papaja`
-- template for APA7
+- template for APA article (7th edition)
 
 ## Task
 

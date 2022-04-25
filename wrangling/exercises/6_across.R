@@ -14,7 +14,8 @@ blomkvist <- select(blomkvist, id, smoker, age, starts_with("rt"))
 # mutate(data, across(variables, ~function(.)))
 
 # Change the following calls using across().
-# Make sure you transform only the variable required by the code.
+# Make sure you transform only the variables required by the code.
+
 # 1.
 mutate(blomkvist, rt_hand_d = log(rt_hand_d))
 
@@ -39,6 +40,14 @@ mutate(blomkvist, rt_hand_d = log(rt_hand_d),
 
 mutate(blomkvist, across(---, ---))
 
+# 5.
+mutate(blomkvist, log_rt_hand_d = log(rt_hand_d),
+                  log_rt_hand_nd = log(rt_hand_nd),
+                  log_rt_foot_d = log(rt_foot_d),
+                  log_rt_foot_nd = log(rt_foot_nd))
+
+mutate(blomkvist, across(---, ---, .names = "---{.col}"))
+
 # We want the rowwise means across all rt variables like so
 mutate(blomkvist, mean_rt = (rt_hand_d + rt_hand_nd + rt_foot_d + rt_foot_nd)/4)
 # but using c_across.
@@ -46,7 +55,7 @@ mutate(blomkvist, mean_rt = (rt_hand_d + rt_hand_nd + rt_foot_d + rt_foot_nd)/4)
 # c_across requires rowwise grouping
 blomkvist_rowwise <- rowwise(blomkvist)
 
-# Here is a (n incorrect) proposal that you need to fix.
+# Here is a(n incorrect) proposal that you need to fix.
 mutate(blomkvist, some_kinda_mean = sum(c_across(where(is.numeric))))
 # Is the data variable correct?
 # What does where(is.numeric) do?

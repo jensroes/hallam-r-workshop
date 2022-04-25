@@ -7,7 +7,6 @@ output:
     transition: slower
     widescreen: true
     css: slides.css
-#runtime: shiny
 bibliography      : ["../refs/references.bib"]
 ---
 
@@ -43,48 +42,85 @@ library(knitr)
 library(kableExtra)
 ```
 
+## About me: Jens Roeser 
+
+<div style="float: left; width: 65%;">
+
+- early career researchfellow @ psychology department (Nottingham Trent University)
+- theory: psycholinguistics; language production / comprehension / acquisition
+- methods: Bayesian modelling (talk to me about mixture models); Stan; keystroke logging; eyetracking
+- teaching: statistics (R of course); cognitive psychology; language acquisition
+- twitter: <https://twitter.com/jens_roeser>
+
+</div>
+
+<div style="float: right; width: 30%;">
+
+```{r fig.align='right', out.width="100%", echo = F}
+knitr::include_graphics("../gfx/me.jpg")
+```
+</div>
+
+
+## Outline for today
+
+- Data wrangling with `tidyverse` (50%)
+- Data viz with `ggplot2` (40%)
+- R-Markdown (10%)
+- Lots of hands-on exercises
+
 
 ## Why should I care?
 
 Why using R (or code in general) to handle data?
 
-- Reduce human factor
+** What do you think? **
+
+## Why should I care?
+
+Why using R (or code in general) to handle data?
+
+- \> 70% to 80% of data analysis is data wrangling
+- Open source: R is and always will be free of charge
+- Reduce human error
 - Reduce manual work
-- Reproducibility
-- Flexibility
-- Speed
-- > 70 to 80% of data analysis is data wrangling
-- Open source
+- Reproducibility: publish your code and look at code of other researchers
+- Flexibility: different ways of looking at data
+- Quickly growing number of available add-ons (packages) for data analysis
+- Speed: faster than manually transforming data in spreadsheets
 - Large community of friendly peer support
 
 ## Rules!
 
-- Never change your data manually, document everything in code.
-  - Making changes.
-  - Reproducibility
+- Never change your data manually; document everything in code.
+  - Retrospective amendments made easy
+  - Documentation / reproducibility
 - Organized working environment
-  - .Rproj with folder per project with sub-directories for scripts, data, plots, etc
-  - Short scripts: less code is always better.
+  - `.Rproj` with one director per project with sub-directories for scripts, data, plots, etc
+  - Short scripts: less code with one clear purpose is always better (test is: does the name of your script suggest a specific or general purpose?)
 - Comment your code (`# Ceci n'est pas un comment!`)
 - If possible, use `tidyverse` instead of base R.
 
 
 ## Download repository
 
-- [https://github.com/jensroes/hallam-r-workshop](https://github.com/jensroes/hallam-r-workshop)
+- Download: [https://github.com/jensroes/hallam-r-workshop](https://github.com/jensroes/hallam-r-workshop)
+- Click on: `Code` \> `Download ZIP` \> unzip directory on your machine.
 - Open project by double clicking on `hallam-r-workshop.Rproj`
 - `wrangling/exercises/`: exercises associated with each topic
-- `wrangling/data/`: scripts read data from here
-- `wrangling/slides.Rmd`: these slides in R markdown format
+- `data/`: scripts read data from here
+- `wrangling/slides.Rmd`: these slides in R markdown format (`.html` format provided as well)
 
-
-## Data wrangling: goals
+## Goals of data wrangling: goals
 
 - Data come in various formats (long, wide) and data type (xlsx, ods, json, csv, sav)
-- Make data suitable to use: e.g. for statistical models, data viz, summary table
+- No format is suitable for every goal
+- Fluency in data wrangling gives you a lot of power.
+- Make data format suitable to use: e.g. for statistical models (correlations, linear regression), functions, data viz, summary table
+- Calculate new variables, filter or combine data
 - Reveal information
 - Summarise information
-- Calculate variables
+- (also creating counterbalanced, randomised stimulus lists)
 
 
 ## `tidyverse` {.columns-2}
@@ -149,17 +185,19 @@ knitr::include_graphics("../gfx/tidy_1.png")
 knitr::include_graphics("../gfx/tidy_1.png")
 ```
 
-- Consistent data structure allows easier learning of related tools because they have similar underpinning principles.
-- Placing variables in columns takes advantage of R's vectorised nature.    
+- Placing variables in columns takes advantage of R's vectorised nature (faster processing, more compact code).
+- Consistent data structure allows easier learning of related tools because they have similar underpinning principles (except similar input structures).
 
 
 ## `tidyverse`: verbs
+
+- Functions that do specific things to our data.
 
 - Must know: `read_csv`, `write_csv`, `glimpse`, `select`, `filter`, `mutate`, `group_by` / `ungroup`, `summarise`, `pivot_wider` / `_longer`, `_join`, `bind_rows` / `_cols`
 
 - Also important: `count`, `pull`, `slice`, `across`, `recode`, `unique`, `n`, `where`, `everything`, `~` and `.`, `map`, `starts_with`, `ends_with`, `contains`, `separate`, `unite`, `transmute`
 
-- There are a lot more but these are the most frequently used ones.
+- There are more but these are the most important ones.
 
 
 
@@ -215,7 +253,6 @@ glimpse(blomkvist)
 - `tidyverse` is operating with tibbles
 - Type of data structure
 - Easier to read in console
-- .csv: comma separated file
 
 ```{r eval = F}
 # Imports data as data frame
@@ -224,7 +261,8 @@ data_as_frame <- read.csv("path_to_data/data.csv")
 data_as_tibble <- read_csv("path_to_data/data.csv")
 ```
 
-`readr` package: e.g. `read_csv`, `read_delim`, `read_tsv`
+- `.csv`: comma separated file
+- `readr` package: e.g. `read_csv`, `read_delim`, `read_tsv`
 
 
 <p class="forceBreak"></p>
@@ -253,7 +291,7 @@ Functions follow the principle
 function_name(data_name, argument)
 ```
 
-where `argument` specifies what the function has to do with the data.
+where `argument` specifies which variable / condition etc. the function has to operate on.
 
 <p class="forceBreak"></p>
 
@@ -271,96 +309,456 @@ summarise(data, mean_var = mean(variable))
 
 ## Selecting variables 
 
-```{r}
-blomkvist
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+```{r eval = FALSE}
+glimpse(blomkvist)
 ```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
 
 
 ## Selecting variables   
 
-Extracts only those variables you're interested in.
+Extracts variables you're interested in.
 
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
 ```{r}
 select(blomkvist, id, sex, age)
 ```
+</div>
 
 
 ## Selecting variables: select range 
 
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
 ```{r}
 select(blomkvist, id:age)
 ```
+</div>
+
 
 ## Selecting variables: index
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
 
 ```{r}
 select(blomkvist, 1, 2, 3)
 ```
+</div>
 
 ## Selecting variables: index range 
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
 
 ```{r}
 select(blomkvist, 1:3)
 ```
+</div>
 
 ## Selecting variables: rename
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
 
 ```{r}
 select(blomkvist, id, sex, rt = rt_hand_d)
 ```
-
+</div>
 
 ## Selecting multiple variables
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
 
 ```{r }
 select(blomkvist, id, starts_with("rt_"))
 ```
+</div>
 
 ## Selecting multiple variables 
 
-```{r }
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
+
+```{r eval = FALSE}
 select(blomkvist, id, ends_with("d"))
 ```
+**???**
+
+</div>
+
+
+## Selecting multiple variables 
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
+
+```{r eval = TRUE}
+select(blomkvist, id, ends_with("d"))
+```
+</div>
+
+## Selecting multiple variables
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
+
+```{r eval = FALSE}
+select(blomkvist, id, contains("hand"))
+```
+**???**
+
+</div>
 
 
 ## Selecting multiple variables
 
-```{r }
-select(blomkvist, id, contains("hand"))
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
 ```
 
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
 
-## Selecting multiple variables 
+</div>
+
+<div style="float: right; width: 50%;">
+
+```{r}
+select(blomkvist, id, contains("hand"))
+```
+</div>
+
+## (Un-)selecting multiple variables 
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
 
 ```{r }
 select(blomkvist, -contains("hand"))
 ```
 
-## Selecting multiple variables 
+</div>
 
-```{r }
+## (Un-)selecting multiple variables 
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
+
+```{r eval = FALSE}
 select(blomkvist, -ends_with("_d"))
 ```
 
-## Selecting multiple variables 
+**???**
+</div>
 
-```{r }
+## (Un-)selecting multiple variables 
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
+
+```{r}
+select(blomkvist, -ends_with("_d"))
+```
+
+</div>
+
+## (Un-)selecting multiple variables 
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
+
+```{r eval = FALSE}
 select(blomkvist, -sex:-smoker)
 ```
 
+**???**
+
+</div>
+
+## (Un-)selecting multiple variables 
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
+
+```{r}
+select(blomkvist, -sex:-smoker)
+```
+
+</div>
+
+
 ## Selecting multiple variables
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
 
 ```{r }
 select(blomkvist, where(is.character))
 ```
 
+</div>
+
+
 ## Selecting multiple variables
 
-```{r }
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
+
+```{r eval = FALSE}
+select(blomkvist, where(is.numeric))
+```
+
+**???**
+
+</div>
+
+## Selecting multiple variables
+
+Extracts variables you're interested in.
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+glimpse(blomkvist)
+```
+
+```{r echo = FALSE}
+glimpse(blomkvist, width = 40)
+```
+
+</div>
+
+<div style="float: right; width: 50%;">
+
+```{r}
 select(blomkvist, where(is.numeric))
 ```
 
 Continue with exercise 2
+
+</div>
 
 
 ## Filtering data
@@ -402,6 +800,7 @@ filter(blomkvist_rt, rt > 708, rt < 900)
 
 ```{r }
 filter(blomkvist_rt, rt > 708 | rt < 900)
+# which is a logical tautology really
 ```
 <p class="forceBreak"></p>
 
@@ -409,23 +808,64 @@ filter(blomkvist_rt, rt > 708 | rt < 900)
 filter(blomkvist_rt, rt < 708 | rt > 900)
 ```
 
-## Categorical variables {.columns-2}
+## Continuous variables {.columns-2}
 
-```{r }
-unique(blomkvist_rt$smoker)
+```{r}
+filter(blomkvist_rt, rt > mean(rt, na.rm = TRUE))
+```
+<p class="forceBreak"></p>
+
+```{r}
+mean(blomkvist_rt$age, na.rm = TRUE)
 ```
 
-<p class="forceBreak"></p>
+## NB. What's `na.rm = TRUE`?
+
+```{r}
+# Data with missing values
+y <- c(100, 1150, 200, 43, NA, 15)
+```
+
+```{r}
+mean(y)
+```
+
+```{r}
+mean(y, na.rm = TRUE)
+```
+
+```{r}
+sd(y, na.rm = TRUE)
+```
+
+
+## Categorical variables {.columns-2}
+
 
 ```{r }
 filter(blomkvist_rt, smoker == "yes")
 ```
 
-## Categorical variables
+<p class="forceBreak"></p>
+
+```{r }
+unique(blomkvist_rt$smoker)
+```
+
+
+
+## Categorical variables {.columns-2}
 
 ```{r }
 filter(blomkvist_rt, smoker != "yes")
 ```
+
+<p class="forceBreak"></p>
+
+```{r }
+unique(blomkvist_rt$smoker)
+```
+
 
 
 ## Categorical variables {.columns-2}
@@ -440,9 +880,23 @@ filter(blomkvist_rt, smoker %in% c("yes", "former"))
 filter(blomkvist_rt, !(smoker %in% c("yes", "former")))
 ```
 
-## Missing data {.columns-2}
+## Missing data
 
 ```{r }
+unique(blomkvist_rt$smoker)
+```
+
+```{r }
+filter(blomkvist_rt, smoker == "NA") # ooops!!!
+```
+
+```{r }
+filter(blomkvist_rt, smoker == NA) # double ooops!!!
+```
+
+## Missing data {.columns-2}
+
+```{r}
 filter(blomkvist_rt, is.na(smoker))
 ```
 <p class="forceBreak"></p>
@@ -455,19 +909,25 @@ Continue with exercise 3
 
 
 
-## Mutating data {.columns-2}
+## Mutating data
 
 Adding new variables to the data or changing existing ones.
+
+<div style="float: left; width: 50%;">
 
 ```{r}
 mutate(blomkvist_rt, rt_2 = rt * rt)
 ```
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 40%;">
 
 ```{r}
 mutate(blomkvist_rt, rt_2 = rt^2)
 ```
+
+</div>
 
 ## Mutating data
 
@@ -482,31 +942,7 @@ mutate(blomkvist_rt, log_rt = log(rt))
 mutate(blomkvist_rt, is_slow = rt > 700)
 ```
 
-## Mutating data {.columns-2}
 
-```{r}
-# oooops....
-mutate(blomkvist_rt, mean_rt = mean(rt))
-```
-
-<p class="forceBreak"></p>
-
-
-```{r}
-# Data with missing values
-y <- c(100, 1150, 200, 43, NA, 15)
-```
-
-```{r}
-mean(y)
-```
-```{r}
-mean(y, na.rm = TRUE)
-```
-
-```{r}
-sd(y, na.rm = TRUE)
-```
 
 
 ## Mutating data 
@@ -531,8 +967,7 @@ mutate(blomkvist_rt, mean_rt = mean(rt, na.rm = TRUE),
 <p class="forceBreak"></p>
 
 ```{r eval = F}
-# or in one go
-mutate(blomkvist_rt, 
+mutate(blomkvist_rt, # or both in one go
        is_slow = rt > mean(rt, na.rm = TRUE))
 ```
 
@@ -561,9 +996,10 @@ case_when(condition ~ do) # similar to ifelse()
 ```
 
 ```{r}
-mutate(blomkvist_rt, smoker_age = case_when(smoker == "yes" & age > 60 ~ "senior smoker",
-                                            is.na(smoker) | is.na(age) ~ "dunno",
-                                            TRUE ~ smoker))
+mutate(blomkvist_rt, age_cat = case_when(age > 70 ~ "high",
+                                         age > 40 ~ "middle",
+                                         is.na(smoker) ~ "dunno",
+                                         TRUE ~ "on the young side"))
 ```
 
 ## Mutating data
@@ -571,14 +1007,14 @@ mutate(blomkvist_rt, smoker_age = case_when(smoker == "yes" & age > 60 ~ "senior
 Continue with exercise 4
 
 
-## Grouping data with `group_by()`
+## Grouping data with `group_by()` {.smaller}
 
 Perform an action (function) for each level the grouping variable individually.
 
 ```{r}
-# Group by levels of smoker
-blomkvist_grouped <- group_by(blomkvist_rt, smoker)
-blomkvist_grouped
+blomkvist_grouped <- group_by(blomkvist_rt, smoker) # Group by smoker
+blomkvist_grouped 
+# How many groups and what are they?
 ```
 
 
@@ -596,31 +1032,64 @@ mutate(blomkvist_rt, # not grouped
 ```{r}
 mutate(blomkvist_grouped, # grouped data
        mean_rt = mean(rt, na.rm = TRUE))
+# What's the grouping variable?
+# What's the difference?
 ```
 
 
-## Never forget to *ungroup* your data! {.columns-2}
+## Never forget to *ungroup* your data
 
-when you're done, otherwise you will keep performing operations on each level of the grouping variable.
+otherwise you will keep performing by-group operations, even if you didn't intend to.
+
+<div style="float: left; width: 40%;">
 
 ```{r}
 blomkvist_grouped # :(
 ```
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 50%;">
 
 ```{r}
-blomkvist_ungrouped <- ungroup(blomkvist_grouped)
-blomkvist_ungrouped # :)
+ungroup(blomkvist_grouped) # :)
+# Spot the difference!
 ```
 
+</div>
 
 
 
+## Summarise (grouped) data
 
-## Summarise data {.columns-2}
+... using descriptive tools.
+
+<div style="float: left; width: 45%;">
+
+```{r}
+summarise(blomkvist_rt, # not grouped
+          mean_rt = mean(rt, na.rm = TRUE),
+          N = n())
+```
+
+</div>
+
+<div style="float: right; width: 45%;">
+
+```{r}
+summarise(blomkvist_grouped, # grouped data
+          mean_rt = mean(rt, na.rm = TRUE),
+          N = n())
+```
+
+</div>
+
+
+## Summarise data
 
 Summarising data using descriptive tools.
+
+<div style="float: left; width: 40%;">
 
 ```{r}
 summarise(blomkvist_rt, # not grouped
@@ -630,7 +1099,10 @@ summarise(blomkvist_rt, # not grouped
           max_rt = max(rt, na.rm = TRUE),
           N = n())
 ```
-<p class="forceBreak"></p>
+
+</div>
+
+<div style="float: right; width: 50%;">
 
 ```{r}
 summarise(blomkvist_grouped, # grouped data
@@ -641,12 +1113,15 @@ summarise(blomkvist_grouped, # grouped data
           N = n())
 ```
 
+</div>
+
+
 ## Grouping data
 
 - Continue with exercise 5
 
 
-## `across()` {.columns-2 .smaller}
+## Mutate data with `across()` {.columns-2 .smaller}
 
 Create a new column.
 
@@ -665,10 +1140,11 @@ mutate(blomkvist_rt, across(rt, log))
 First argument of `across` will be used as first argument of function (`log`) which is supplied as second argument to `across`.
 
 
-## Mutate data with `across()` 
+## Mutate data with `across()` {.smaller}
 
 ```{r echo = F}
-blomkvist <- select(blomkvist, -starts_with("pal_")) %>%
+blomkvist_2 <- blomkvist 
+blomkvist <- select(blomkvist, -starts_with("pal_"), -sex, -medicine) %>%
   drop_na()
 ```
 
@@ -685,52 +1161,51 @@ mutate(blomkvist, rt_hand_d = log(rt_hand_d),
 mutate(blomkvist, across(c(rt_hand_d, rt_hand_nd), log))
 ```
 
-
-## Mutate data with `across()` 
-
-```{r}
-mutate(blomkvist, across(starts_with("rt_"), log))
-```
-
-## Mutate data with `across()` 
+## Mutate data with `across()` {.smaller} 
 
 ```{r}
 mutate(blomkvist, across(where(is.numeric), log))
-```
-
-## Mutate data with `c_across()`
-
-```{r}
-# Long way
-mutate(blomkvist, mean_rt = (rt_hand_d + rt_hand_nd + rt_foot_d + rt_foot_nd)/4)
-```
-
-## Mutate data with `c_across()`
-
-```{r eval=F}
-# Long way
-mutate(blomkvist, mean_rt = (rt_hand_d + rt_hand_nd + rt_foot_d + rt_foot_nd)/4)
-```
-
-```{r}
-blomkvist_grouped <- rowwise(blomkvist) # each row is a group
-mutate(blomkvist_grouped, mean_rt = mean(c_across(starts_with("rt_"))))
-```
-
-## Filter data with `across()`
-
-```{r}
-filter(blomkvist, rt_hand_d > 1000, rt_hand_nd > 1000, rt_foot_d > 1000, rt_foot_nd > 100)
+# Not ideal here: see `id` column
 ```
 
 
-## Filter data with `across()`
+## Mutate data with `across()`  {.smaller}
 
-```{r}
-filter(blomkvist, across(starts_with("rt_"), ~ . > 1000 ))
+```{r eval = F}
+mutate(blomkvist, across(starts_with("rt_"), log))
 ```
 
-## What is "`~ .`"? {.columns-2}
+```{r echo = F}
+tmp <- mutate(blomkvist, across(starts_with("rt_"), log))
+glimpse(tmp)
+```
+
+
+## Mutate data with `across()`  {.smaller}
+
+```{r eval = F}
+mutate(blomkvist, across(starts_with("rt_"), log, .names = "log_{.col}"))
+```
+
+
+```{r echo = F}
+blomkvist_vars <- mutate(blomkvist, across(starts_with("rt_"), log, .names = "log_{.col}"))
+glimpse(blomkvist_vars)
+```
+
+## Mutate data with `across()`  {.smaller}
+
+```{r eval = F}
+mutate(blomkvist, across(starts_with("rt_"), list(lg = log, sqr = ~.^2), .names = "{.fn}_{.col}"))
+```
+
+```{r echo = F}
+blomkvist_vars <- mutate(blomkvist, across(starts_with("rt_"), list(lg = log, sqr = ~.^2), .names = "{.fn}_{.col}"))
+glimpse(blomkvist_vars)
+```
+
+
+## What is "`~.`"? {.columns-2}
 
 ```{r}
 mutate(blomkvist_rt, across(rt, round, 0))
@@ -742,25 +1217,91 @@ mutate(blomkvist_rt, across(rt, round, 0))
 mutate(blomkvist_rt, across(rt, ~round(., 0)))
 ```
 
-## What is "`~ .`"? {.columns-2}
+## What is "`~.`"? {.columns-2}
 
 - "`~`": we want to make the position of the argument in function explicit.
 - "`.`": the location of the argument.
-- Always possible but necessary for logical operators (`>`, `==`) and when argument is not in first position of supplied function.
+- Always possible but necessary for operator functions (`>`, `==`, `^`, `+`) and when argument is not in first position of supplied function.
 
 
 <p class="forceBreak"></p>
 
 ```{r}
 mutate(blomkvist_rt, 
-       across(rt, ~round(.,0)), # optional
-       across(age, ~ . > 40),   # operator
-       across(rt, ~paste("RT is ",.))) # position
+       across(rt, ~round(. , 0)), # optional
+       across(age, ~.^2),   # operator
+       across(rt, ~paste("RT is", .))) # position
+```
+
+
+## Mutate data with `c_across()` {.smaller}
+
+Apply a function across different columns.
+
+Example: get the mean for of all rts for each participant (row).
+
+```{r}
+# Long way
+mutate(blomkvist, mean_rt = (rt_hand_d + rt_hand_nd + rt_foot_d + rt_foot_nd)/4)
+```
+
+
+## Mutate data with `c_across()` {.smaller}
+
+```{r eval=F}
+# Long way
+mutate(blomkvist, mean_rt = (rt_hand_d + rt_hand_nd + rt_foot_d + rt_foot_nd)/4)
+```
+
+```{r}
+# Still a lot of typing :(
+blomkvist_rowwise <- rowwise(blomkvist) # each row / ppt is a group
+mutate(blomkvist_rowwise, mean_rt = mean(c_across(c(rt_hand_d, rt_hand_nd, rt_foot_d, rt_foot_nd))))
+```
+
+
+## Mutate data with `c_across()` {.smaller}
+
+```{r eval=F}
+# Long way
+mutate(blomkvist, mean_rt = (rt_hand_d + rt_hand_nd + rt_foot_d + rt_foot_nd)/4)
+```
+
+```{r}
+# That's better :)
+blomkvist_rowwise <- rowwise(blomkvist) # each row / ppt is a group
+mutate(blomkvist_rowwise, mean_rt = mean(c_across(starts_with("rt_"))))
+```
+
+
+## Mutate data with `c_across()` {.smaller}
+
+```{r}
+# Without rowwise grouping returns the grand average:
+mutate(blomkvist, mean_rt = mean(c_across(starts_with("rt_"))))
+# which is not what we want.
 ```
 
 
 
-## Summarise across variables
+
+## Filter data with `across()` 
+
+```{r}
+filter(blomkvist, rt_hand_d > 1000, rt_hand_nd > 1000, rt_foot_d > 1000, rt_foot_nd > 100)
+```
+
+
+## Filter data with `across()` 
+
+```{r}
+filter(blomkvist, across(starts_with("rt_"), ~ . > 1000 ))
+```
+
+
+
+
+## Summarise variables with `across()`
 
 ```{r}
 summarise(blomkvist, rt_hand_d_mean = mean(rt_hand_d),
@@ -768,20 +1309,19 @@ summarise(blomkvist, rt_hand_d_mean = mean(rt_hand_d),
 
 ```
 
-## Summarise across variables
+## Summarise variables with `across()`
 
 ```{r}
 summarise(blomkvist, across(c(rt_hand_d, rt_hand_nd), mean))
 ```
 
-## Summarise across variables
+## Summarise variables with `across()`
 
 ```{r}
 summarise(blomkvist, across(starts_with("rt_"), mean))
 ```
 
-
-## Summarise across variables
+## Summarise variables with `across()`
 
 ```{r}
 summarise(blomkvist, across(starts_with("rt_"), mean))
@@ -791,27 +1331,29 @@ summarise(blomkvist, across(starts_with("rt_"), mean))
 summarise(blomkvist, across(starts_with("rt_"), list(mean = mean, sd = sd)))
 ```
 
-## `across()`
+## Using `across()` to mutate and summarise variables
 
-- Continue with exercise 6
+Open exercise 6 script.
 
 
-## Pivoting data
+## Pivoting data: tidy data 
+
+```{r fig.align='center', out.width="90%", echo = F}
+knitr::include_graphics("../gfx/tidy_1.png")
+```
+
+Called, a *long* data format.
+
+## Pivoting data: wide format
 
 ```{r }
 blomkvist_wide <- select(blomkvist, id, starts_with("rt_"))
 blomkvist_wide
 ```
 
+RT is distributed across 4 columns: useful for certain analyses but isn't tidy.
 
-## Tidy data 
-
-```{r fig.align='center', out.width="90%", echo = F}
-knitr::include_graphics("../gfx/tidy_1.png")
-```
-
-
-## Pivoting data to long format {.columns-2}
+## Pivoting data to long format | has never been easier {.columns-2}
 
 ```{r}
 blomkvist_wide
@@ -820,28 +1362,23 @@ blomkvist_wide
 
 <p class="forceBreak"></p>
 
-```{r eval = F}
+```{r eval = T}
 pivot_longer(blomkvist_wide, cols = starts_with("rt_"))
-
-```
-
-```{r}
-# or
-pivot_longer(blomkvist_wide, cols = -id)
 ```
 
 
 ## Pivoting data to long format {.columns-2}
 
 ```{r }
-pivot_longer(blomkvist_wide, cols = -id)
+pivot_longer(blomkvist_wide, cols = -id) # shorthand
 ```
 
 
 <p class="forceBreak"></p>
 
 ```{r}
-pivot_longer(blomkvist_wide, cols = -id, 
+pivot_longer(blomkvist_wide, 
+             cols = -id, 
              names_to = "variable", 
              values_to = "rt")
 ```
@@ -852,7 +1389,8 @@ pivot_longer(blomkvist_wide, cols = -id,
 
 
 ```{r}
-pivot_longer(blomkvist_wide, cols = -id, 
+pivot_longer(blomkvist_wide, 
+             cols = -id, 
              names_to = "variable",
              values_to = "rt")
 ```
@@ -861,7 +1399,8 @@ pivot_longer(blomkvist_wide, cols = -id,
 <p class="forceBreak"></p>
 
 ```{r}
-pivot_longer(blomkvist_wide, cols = -id, 
+pivot_longer(blomkvist_wide, 
+             cols = -id, 
              names_to = c(".value", 
                           "response_by", 
                           "dominant"), 
@@ -869,15 +1408,41 @@ pivot_longer(blomkvist_wide, cols = -id,
 ```
 
 
+## Pivoting data to long format {.columns-2}
 
+
+```{r}
+# Flexible naming pattern
+pivot_longer(blomkvist_wide, 
+             cols = -id, 
+             names_to = c(".value", 
+                          "response_by", 
+                          "dominant"), 
+             names_pattern = "(.+)_(.+)_(.+)")
+```
+
+
+<p class="forceBreak"></p>
+
+
+```{r}
+# Simplifies to
+pivot_longer(blomkvist_wide, 
+             cols = -id, 
+             names_to = c(".value", 
+                          "response_by", 
+                          "dominant"), 
+             names_sep = "_")
+```
 
 
 ## Pivoting data back to wide format 
 
 ```{r}
-bk_long <- pivot_longer(blomkvist_wide, cols = -id, 
+bk_long <- pivot_longer(blomkvist_wide, 
+                        cols = -id, 
                         names_to = c(".value", "response_by", "dominant"), 
-                        names_pattern = "(.+)_(.+)_(.+)")
+                        names_sep = "_")
 bk_long
 ```
 
@@ -909,6 +1474,21 @@ bk_long
 ```{r}
 pivot_wider(bk_long, 
             names_from = c(response_by, dominant), 
+            values_from = rt)
+```
+
+
+## Pivoting data back to wide format {.columns-2}
+
+```{r}
+bk_long
+```
+
+<p class="forceBreak"></p>
+
+```{r}
+pivot_wider(bk_long, 
+            names_from = c(response_by, dominant), 
             values_from = rt, 
             names_prefix = "rt_")
 ```
@@ -919,8 +1499,13 @@ pivot_wider(bk_long,
 
 Continue with exercise 7
 
+```{r echo = F}
+blomkvist <- select(blomkvist_2, -starts_with("pal_"))
+```
 
-## Combine data
+
+
+## Combine data: overview
 
 ```{r, eval=F}
 # Combine two datasets side-by-side
@@ -961,32 +1546,29 @@ bind_cols(bk_id_age, bk_med_smoke)
 ```
 
 
-## Combine data: `bind_rows()`
+## Combine data: `bind_rows()` 
 
 ```{r}
 bk_former_smokers <- filter(blomkvist, smoker == "former")
 bk_smokers <- filter(blomkvist, smoker == "yes")
 ```
 
-## Combine data: `bind_rows()`
+## Combine data: `bind_rows()` {.smaller}
 
 ```{r}
 # Stacking two data sets
 bk_smoking <- bind_rows(bk_former_smokers, bk_smokers)
 ```
 
-## Combine data: `bind_rows()`
-
-
 ```{r}
-slice_head(bk_smoking, n = 2)
+slice_head(bk_smoking, n = 1)
 ```
 
 ```{r}
-slice_tail(bk_smoking, n = 2)
+slice_tail(bk_smoking, n = 1)
 ```
 
-- even works when columns are not in the same order as long as the names and types match
+This also works when columns are not in the same order as long as the names and types match.
 
 
 

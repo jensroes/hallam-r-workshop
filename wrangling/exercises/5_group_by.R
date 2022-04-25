@@ -47,5 +47,6 @@ blomkvist_grouped
 # Summarise the data with the same stats as above but with data grouped by medicine_cat.
 summarise(---,---)
 
-# Don't forget to ungroup your data again:
+# Don't forget to ungroup your data again :)
 blomkvist_ungrouped <- ungroup(blomkvist_grouped)
+# This doesn't make a difference here but is a good habit to develop.

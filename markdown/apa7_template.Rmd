@@ -166,6 +166,7 @@ Equation \ref{eq:lm} is a regression model with age, smoker (levels: yes, no, fo
   \end{aligned}
 \end{equation}
 ```
+
 \noindent where $\epsilon$ is the residual error term that is assumed to be normally distributed around 0
 
 $$
@@ -241,8 +242,7 @@ apa_table(tidy_lrt_pretty,
 ```{r modelcoefs}
 # Summary of model coefficients
 lmer_table <- apa_print(model_interaction)$table
-apa_table(lmer_table,
-          caption = "Model coefficients")
+apa_table(lmer_table, caption = "Model coefficients")
 ```
 
 The overall model is significant; `r apa_print(model_interaction)$full_result$modelfit$r2`.^[Note, that this is just an example. This result is not surprising because the baseline is an intercept only model.] Slowdown in reaction times across age has a quadratic function; `r apa_print(model_interaction)$full_result$polyage__22`. The slowdown across age was more prominent for smokers compared to former smokers and non-smokers; 

@@ -20,7 +20,7 @@ blomkvist_filtered <- filter(blomkvist, ---)
 # transform the rt to its logarithm
 mutate(blomkvist_filtered, log_rt = log(---))
 
-# add the mean rt to the data and centre the rt by subtracting the mean.
+# add the mean rt to the data and centre rt by subtracting the mean.
 mutate(blomkvist_filtered, --- = mean(---),
                            rt_ctr = --- - ---)
 
