@@ -59,15 +59,6 @@ rt_plot <- ggplot(blomkvist_long, aes(y = rt,
 # you need to call it:
 rt_plot
 
-
-rt_plot <- ggplot(blomkvist_long, aes(y = rt, x = response_by, colour = dominant)) +
-  geom_jitter(size = .5,
-              position = position_jitterdodge(jitter.width = .25, # 2. set jitter.width to .25
-                                              dodge.width = .75)) +
-  geom_boxplot(outlier.shape = NA) +
-  facet_wrap(~smoker) +
-  scale_y_log10()
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # We definitely need to change the text.
 # Not that we already change the labels for `smoker` and `dominant` above in anticipation.

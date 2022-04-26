@@ -88,6 +88,7 @@ Why using R (or code in general) to handle data?
 - Flexibility: different ways of looking at data
 - Quickly growing number of available add-ons (packages) for data analysis
 - Speed: faster than manually transforming data in spreadsheets
+- Processing of *large* data sets is not going to be possible in spreadsheets
 - Large community of friendly peer support
 
 ## Rules!

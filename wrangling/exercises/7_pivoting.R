@@ -63,6 +63,9 @@ blomkvist_summary <- summarise(blomkvist_grouped,
 # Ungroup data
 blomkvist_summary <- ungroup(blomkvist_summary)
 
+# Look at the data
+blomkvist_summary
+
 # Pivot is better than older reshaping functions because it can handle more than
 # one variable at once like so:
 pivot_wider(---, # needs to be the summary data set 

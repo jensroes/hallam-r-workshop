@@ -15,8 +15,8 @@ blomkvist_slct_flt <- blomkvist %>%
   select(id, starts_with("rt_")) %>%
   filter(rt_hand_d > 2000)
 
-# Translate the remaining lines of code in this script 
-# into one chain using the pipe operator.
+# Task: Translate the remaining lines of code in this script 
+# into one long chain using the pipe operator.
 # For every operation you add, check how the output looks like!
 # How would you pipe this one:
 

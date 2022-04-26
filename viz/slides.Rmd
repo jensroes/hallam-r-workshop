@@ -239,10 +239,9 @@ ggplot(data = blomkvist,
                      y = rt_hand_d, 
                      colour = smoker))  +
   geom_point(alpha = .25) +
-  stat_smooth(method = "lm", formula = y ~ x + I(x^2), se = FALSE) +
-  ggthemes::theme_clean() +
   scale_y_log10(labels = scales::comma) +
-  scale_x_log10(labels = scales::comma) +
+  stat_smooth(method = "lm", formula = y ~ x + I(x^2), se = FALSE, fullrange = TRUE) +
+  ggthemes::theme_clean() +
   ggthemes::scale_color_colorblind() +
   labs(y = "Average reaction time of dominant\nhand (in msecs)", 
        x = "Age (in years)",
@@ -261,10 +260,9 @@ ggplot(data = blomkvist,
                      y = rt_hand_d, 
                      colour = smoker))  +
   geom_point(alpha = .25) +
-  stat_smooth(method = "lm", formula = y ~ x + I(x^2), se = FALSE) +
-  ggthemes::theme_clean() +
   scale_y_log10(labels = scales::comma) +
-  scale_x_log10(labels = scales::comma) +
+  stat_smooth(method = "lm", formula = y ~ x + I(x^2), se = FALSE, fullrange = TRUE) +
+  ggthemes::theme_clean() +
   ggthemes::scale_color_colorblind() +
   labs(y = "Average reaction time of dominant\nhand (in msecs)", 
        x = "Age (in years)",
@@ -409,7 +407,7 @@ Open script **exercises/1_scatterplots.R**
 - system of rules for mapping variables to graphical properties
 
 
-## (Obligatory) Grammatical elements
+## Obligatory grammatical elements
 
 - **data:** the data you want to visualise indicated as `ggplot(data = ...)`
 - **aesthetics:** mapping of data to graphic properties (axes, size, colour) indicated as `mapping = aes()`
@@ -910,7 +908,7 @@ ggplot(blomkvist, aes(x = age, y = rt_hand_d, colour = smoker)) +
 
 ```{r out.width="65%"}
 ggplot(blomkvist, aes(x = age, y = rt_hand_d, colour = smoker)) +
-  geom_point(size = 2) 
+  geom_point(size = 3) 
 ```
 
 
@@ -1060,35 +1058,6 @@ ggplot(blomkvist, aes(x = smoker, y = rt_hand_d)) +
 
 
 
-## Decoding of continuous variables | colour spectrum
-
-
-<div style="float: left; width: 40%;">
-
-```{r eval = FALSE}
-ggplot(blomkvist, 
-       aes(x = smoker, 
-           y = 0, 
-           colour = rt_hand_d)) +
-  geom_jitter() 
-```
-</div>
-
-<div style="float: right; width: 55%;">
-
-```{r echo = FALSE, out.width="100%"}
-ggplot(blomkvist, aes(x = smoker, 
-                      y = 0, 
-                      colour = rt_hand_d)) +
-  geom_jitter(width = .25, height = .5, size = 3, alpha = .75) +
-  scale_y_continuous(limits = c(-.75,.75)) +
-  theme(axis.text.y = element_blank(),
-        axis.ticks.y = element_blank(),
-        axis.title.y = element_blank())
-```
-</div>
-
-
 
 ## Decoding of continuous variables | area (size)
 
@@ -1118,6 +1087,34 @@ ggplot(blomkvist,
 ```
 </div>
 
+
+## Decoding of continuous variables | colour spectrum
+
+
+<div style="float: left; width: 40%;">
+
+```{r eval = FALSE}
+ggplot(blomkvist, 
+       aes(x = smoker, 
+           y = 0, 
+           colour = rt_hand_d)) +
+  geom_jitter() 
+```
+</div>
+
+<div style="float: right; width: 55%;">
+
+```{r echo = FALSE, out.width="100%"}
+ggplot(blomkvist, aes(x = smoker, 
+                      y = 0, 
+                      colour = rt_hand_d)) +
+  geom_jitter(width = .25, height = .5, size = 3, alpha = .75) +
+  scale_y_continuous(limits = c(-.75,.75)) +
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        axis.title.y = element_blank())
+```
+</div>
 
 
 ## Decoding of categorical variables (groups)
@@ -1266,7 +1263,7 @@ Open script **exercises/3a_aesthetics_and_attributes.R**
 If you have time continue with 
 
 - **exercises/3b_aesthetics_and_attributes.R**
-- **exercises/3c_aesthetics_and_attributes**
+- **exercises/3c_aesthetics_and_attributes.R**
 
 
 # Major visualisation tools
@@ -1289,10 +1286,9 @@ print(geoms, quote = F)
 
 ## Major visualisation tools
 
-- more `geoms` in other packages such as `tidybayes` and `ggridges`
+- more `geoms` in other packages such as `tidybayes`, `ggbeeswarm`, and `ggridges`
 - choice depends on visualisation goal (and your subject domain)
 - many can be combined
-- different obligatory aesthetics
 - three important groups: 
   - bivariate distributions 
   - univariate distributions
@@ -1400,11 +1396,10 @@ ggplot(blomkvist, aes(x = rt_hand_d)) +
 
 - function: distribution of values for two or more groups (often closely tied to statistical descriptions)
 - variable type: continuous 
-- examples: (jitter) dots, box plot, violin plot, barplot (pie chart), dynamite plots
+- examples: (jitter) dots, box plot, violin plot, beeswarm plots, barplot (pie chart), dynamite plots
 
 
 ## Group comparisons | dynamite plot and its pitfalls
-
 
 <div style="float: left; width: 40%;">
 
@@ -2919,10 +2914,14 @@ Continue with **exercises/5b_bringing_everything_together.R**
 - R for data science chapter 3: [r4ds.had.co.nz](https://r4ds.had.co.nz/data-visualisation.html)
 - choosing the right visualisation: [data-to-viz.com](https://www.data-to-viz.com/)
 - Rick Scavetta's course: [datacamp.com](https://learn.datacamp.com/skill-tracks/data-visualization-with-r)
-- need a data set for practicing: [vincentarelbundock.github.io](https://vincentarelbundock.github.io/Rdatasets/datasets.html)
 - `ggplot2` [CheatSheet](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)
 - most important functions: [ggplot2.tidyverse.org](https://ggplot2.tidyverse.org/reference/)
 - example for 3d plots in "exercises" folder
+
+```{r echo=F, eval = F}
+#- need a data set for practicing: [vincentarelbundock.github.io](https://vincentarelbundock.github.io/Rdatasets/datasets.html)
+
+```
 
 
 
