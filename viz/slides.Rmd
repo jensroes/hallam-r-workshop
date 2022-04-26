@@ -2909,7 +2909,7 @@ Continue with **exercises/5b_bringing_everything_together.R**
 
 
 
-## Useful resources {.smaller}
+## Useful resources
 
 - R for data science chapter 3: [r4ds.had.co.nz](https://r4ds.had.co.nz/data-visualisation.html)
 - choosing the right visualisation: [data-to-viz.com](https://www.data-to-viz.com/)
