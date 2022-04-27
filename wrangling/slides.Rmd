@@ -332,13 +332,13 @@ summarise(data, mean_var = mean(variable))
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 70%;">
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist)
 ```
 
 </div>
@@ -348,19 +348,19 @@ glimpse(blomkvist, width = 40)
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 ```{r}
 select(blomkvist, id, sex, age)
 ```
@@ -371,19 +371,19 @@ select(blomkvist, id, sex, age)
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 ```{r}
 select(blomkvist, id:age)
 ```
@@ -394,19 +394,19 @@ select(blomkvist, id:age)
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r}
 select(blomkvist, 1, 2, 3)
@@ -417,19 +417,19 @@ select(blomkvist, 1, 2, 3)
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r}
 select(blomkvist, 1:3)
@@ -440,19 +440,19 @@ select(blomkvist, 1:3)
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r}
 select(blomkvist, id, sex, rt = rt_hand_d)
@@ -463,19 +463,19 @@ select(blomkvist, id, sex, rt = rt_hand_d)
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r }
 select(blomkvist, id, starts_with("rt_"))
@@ -486,19 +486,19 @@ select(blomkvist, id, starts_with("rt_"))
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r eval = FALSE}
 select(blomkvist, id, ends_with("d"))
@@ -512,19 +512,19 @@ select(blomkvist, id, ends_with("d"))
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r eval = TRUE}
 select(blomkvist, id, ends_with("d"))
@@ -535,19 +535,19 @@ select(blomkvist, id, ends_with("d"))
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r eval = FALSE}
 select(blomkvist, id, contains("hand"))
@@ -561,19 +561,19 @@ select(blomkvist, id, contains("hand"))
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r}
 select(blomkvist, id, contains("hand"))
@@ -584,19 +584,19 @@ select(blomkvist, id, contains("hand"))
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r }
 select(blomkvist, -contains("hand"))
@@ -608,19 +608,19 @@ select(blomkvist, -contains("hand"))
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r eval = FALSE}
 select(blomkvist, -ends_with("_d"))
@@ -633,19 +633,19 @@ select(blomkvist, -ends_with("_d"))
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r}
 select(blomkvist, -ends_with("_d"))
@@ -657,19 +657,19 @@ select(blomkvist, -ends_with("_d"))
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r eval = FALSE}
 select(blomkvist, -sex:-smoker)
@@ -683,19 +683,19 @@ select(blomkvist, -sex:-smoker)
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r}
 select(blomkvist, -sex:-smoker)
@@ -708,19 +708,19 @@ select(blomkvist, -sex:-smoker)
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r }
 select(blomkvist, where(is.character))
@@ -733,19 +733,19 @@ select(blomkvist, where(is.character))
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r eval = FALSE}
 select(blomkvist, where(is.numeric))
@@ -759,19 +759,19 @@ select(blomkvist, where(is.numeric))
 
 Extracts variables you're interested in.
 
-<div style="float: left; width: 40%;">
+<div style="float: left; width: 30%;">
 
 ```{r eval = FALSE}
 glimpse(blomkvist)
 ```
 
 ```{r echo = FALSE}
-glimpse(blomkvist, width = 40)
+glimpse(blomkvist, width = 30)
 ```
 
 </div>
 
-<div style="float: right; width: 50%;">
+<div style="float: right; width: 65%;">
 
 ```{r}
 select(blomkvist, where(is.numeric))
