@@ -48,8 +48,8 @@ library(kableExtra)
 
 - early career researchfellow @ psychology department (Nottingham Trent University)
 - theory: psycholinguistics; language production / comprehension / acquisition
-- methods: Bayesian modelling (talk to me about mixture models); Stan; keystroke logging; eyetracking
-- teaching: statistics (R of course); cognitive psychology; language acquisition
+- methods: Bayesian modelling [talk to me about mixture models, @roeser2021modelling] in Stan; keystroke logging; eyetracking
+- teaching: statistics -- R of course [`psyntur`, @psyntur]; cognitive psychology; language acquisition
 - twitter: <https://twitter.com/jens_roeser>
 
 </div>
