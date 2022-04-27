@@ -362,14 +362,19 @@ Open script **exercises/tdd.R**
 - visualisation helps us to understand patterns, structures, relationships
 - prevent wrong conclusions about data / theory
 
-## Basic principles {.columns-2}
+## Basic principles 
+
+
+<div style="float: left; width: 40%;">
 
 @hartwig1979exploratory:
 
 - *skepticism:* any visualization might obscure or misrepresent data
 - *openness:* there might be patterns and structures that we were not expecting
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 50%;">
 
 
 @tufte1983visual:
@@ -380,6 +385,7 @@ Open script **exercises/tdd.R**
 - encourage the eye to compare different pieces of data
 - reveal data at several levels of detail, from broad overview to fine structures
 
+</div>
 
 ## Exercise 1 | creating scatterplots in R
 

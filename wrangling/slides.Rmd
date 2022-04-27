@@ -235,21 +235,32 @@ knitr::include_graphics("../gfx/sc2c.jpeg")
 
 
 
-## Example data set: @blomkvist2017reference {.columns-2}
+## Example data set: @blomkvist2017reference 
 
+<div style="float: left; width: 50%;">
 
-```{r}
+```{r eval = F}
 blomkvist <- read_csv("../data/blomkvist.csv")
 glimpse(blomkvist)
 ```
-<p class="forceBreak"></p>
+```{r echo = F}
+blomkvist <- read_csv("../data/blomkvist.csv")
+glimpse(blomkvist, width = 60)
+```
+</div>
+
+<div style="float: right; width: 45%;">
 
 - Average reaction time (`rt`) of dominant (`_d`) or non-dominant (`_nd`) `hand` or `foot` in msecs
 - `medicine`: number of drugs used daily
 - `pal`: physical activity level: 1 (least) to 4 (most active)
 
+</div>
 
-## tbls (tibble) {.columns-2}
+
+## tbls (tibble) {.smaller}
+
+<div style="float: left; width: 50%;">
 
 - `tidyverse` is operating with tibbles
 - Type of data structure
@@ -265,8 +276,9 @@ data_as_tibble <- read_csv("path_to_data/data.csv")
 - `.csv`: comma separated file
 - `readr` package: e.g. `read_csv`, `read_delim`, `read_tsv`
 
+</div>
 
-<p class="forceBreak"></p>
+<div style="float: right; width: 40%;">
 
 For other data formats:
 
@@ -281,12 +293,16 @@ str(data_as_frame)
 glimpse(data_as_tibble)
 ```
 
-Continue with exercise 1
+Open exercise script 1
+
+</div>
 
 
-## `tidyverse` functions {.columns-2}
+## `tidyverse` functions 
 
 Functions follow the principle
+
+<div style="float: left; width: 40%;">
 
 ```{r, eval = F}
 function_name(data_name, argument)
@@ -294,7 +310,10 @@ function_name(data_name, argument)
 
 where `argument` specifies which variable / condition etc. the function has to operate on.
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 40%;">
+
 
 ```{r, eval = F}
 # Picking out variables
@@ -306,6 +325,7 @@ mutate(data, variable_sqr = variable^2)
 # Aggregate data
 summarise(data, mean_var = mean(variable)) 
 ```
+</div>
 
 
 ## Selecting variables 
@@ -778,17 +798,22 @@ filter(data, condition)
 ```
 
 
-## Continuous variables {.columns-2}
+## Continuous variables 
 
+
+<div style="float: left; width: 40%;">
 
 ```{r }
 filter(blomkvist_rt, rt >= 708)
 ```
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 40%;">
 
 ```{r }
 filter(blomkvist_rt, rt > 708)
 ```
+</div>
 
 ## Continuous variables
 
@@ -797,28 +822,39 @@ filter(blomkvist_rt, rt > 708)
 filter(blomkvist_rt, rt > 708, rt < 900)
 ```
 
-## Continuous variables {.columns-2}
+## Continuous variables 
+
+<div style="float: left; width: 40%;">
 
 ```{r }
 filter(blomkvist_rt, rt > 708 | rt < 900)
 # which is a logical tautology really
 ```
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 40%;">
+
 
 ```{r }
 filter(blomkvist_rt, rt < 708 | rt > 900)
 ```
+</div>
 
-## Continuous variables {.columns-2}
+## Continuous variables 
+
+<div style="float: left; width: 50%;">
 
 ```{r}
 filter(blomkvist_rt, rt > mean(rt, na.rm = TRUE))
 ```
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 40%;">
 
 ```{r}
-mean(blomkvist_rt$age, na.rm = TRUE)
+mean(blomkvist_rt$rt, na.rm = TRUE)
 ```
+</div>
 
 ## NB. What's `na.rm = TRUE`?
 
@@ -840,46 +876,62 @@ sd(y, na.rm = TRUE)
 ```
 
 
-## Categorical variables {.columns-2}
+## Categorical variables
+
+<div style="float: left; width: 45%;">
 
 
 ```{r }
 filter(blomkvist_rt, smoker == "yes")
 ```
+</div>
 
-<p class="forceBreak"></p>
+<div style="float: right; width: 40%;">
 
 ```{r }
 unique(blomkvist_rt$smoker)
 ```
+</div>
 
 
+## Categorical variables 
 
-## Categorical variables {.columns-2}
+<div style="float: left; width: 45%;">
 
 ```{r }
 filter(blomkvist_rt, smoker != "yes")
 ```
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 40%;">
+
 
 ```{r }
 unique(blomkvist_rt$smoker)
 ```
 
+</div>
 
 
-## Categorical variables {.columns-2}
+## Categorical variables 
+
+<div style="float: left; width: 47%;">
+
 
 ```{r }
 filter(blomkvist_rt, smoker %in% c("yes", "former"))
 ```
+</div>
 
-<p class="forceBreak"></p>
+<div style="float: right; width: 50%;">
+
 
 ```{r }
 filter(blomkvist_rt, !(smoker %in% c("yes", "former")))
+
 ```
+</div>
 
 ## Missing data
 
@@ -895,12 +947,17 @@ filter(blomkvist_rt, smoker == "NA") # ooops!!!
 filter(blomkvist_rt, smoker == NA) # double ooops!!!
 ```
 
-## Missing data {.columns-2}
+## Missing data 
+
+<div style="float: left; width: 45%;">
+
 
 ```{r}
 filter(blomkvist_rt, is.na(smoker))
 ```
-<p class="forceBreak"></p>
+</div>
+<div style="float: right; width: 45%;">
+
 
 ```{r }
 filter(blomkvist_rt, !is.na(smoker))
@@ -908,7 +965,7 @@ filter(blomkvist_rt, !is.na(smoker))
 
 Continue with exercise 3
 
-
+</div>
 
 ## Mutating data
 
@@ -957,20 +1014,26 @@ mutate(blomkvist_rt, mean_rt = mean(rt, na.rm = TRUE))
 
 
 
-## Mutating data {.columns-2}
+## Mutating data 
+
+<div style="float: left; width: 48%;">
 
 
 ```{r}
 mutate(blomkvist_rt, mean_rt = mean(rt, na.rm = TRUE),
                      is_slow = rt > mean_rt)
 ```
+</div>
 
-<p class="forceBreak"></p>
+<div style="float: right; width: 42%;">
+
 
 ```{r eval = F}
 mutate(blomkvist_rt, # or both in one go
        is_slow = rt > mean(rt, na.rm = TRUE))
 ```
+
+</div>
 
 ## Mutating data: `recode()` 
 
@@ -1019,15 +1082,18 @@ blomkvist_grouped
 ```
 
 
-## Mutate grouped data {.columns-2}
+## Mutate grouped data 
+
+<div style="float: left; width: 45%;">
+
 
 ```{r}
 mutate(blomkvist_rt, # not grouped
        mean_rt = mean(rt, na.rm = TRUE))
 ```
+</div>
 
-
-<p class="forceBreak"></p>
+<div style="float: right; width: 45%;">
 
 
 ```{r}
@@ -1036,7 +1102,7 @@ mutate(blomkvist_grouped, # grouped data
 # What's the grouping variable?
 # What's the difference?
 ```
-
+</div>
 
 ## Never forget to *ungroup* your data
 
@@ -1122,7 +1188,9 @@ summarise(blomkvist_grouped, # grouped data
 - Continue with exercise 5
 
 
-## Mutate data with `across()` {.columns-2 .smaller}
+## Mutate data with `across()` { .smaller}
+
+<div style="float: left; width: 40%;">
 
 Create a new column.
 
@@ -1130,7 +1198,10 @@ Create a new column.
 mutate(blomkvist_rt, log_rt = log(rt))
 ```
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 45%;">
+
 
 Replace with transformed variable.
 
@@ -1140,6 +1211,7 @@ mutate(blomkvist_rt, across(rt, log))
 
 First argument of `across` will be used as first argument of function (`log`) which is supplied as second argument to `across`.
 
+</div>
 
 ## Mutate data with `across()` {.smaller}
 
@@ -1206,26 +1278,34 @@ glimpse(blomkvist_vars)
 ```
 
 
-## What is "`~.`"? {.columns-2}
+## What's "`~.`"? 
+
+
+<div style="float: left; width: 40%;">
 
 ```{r}
 mutate(blomkvist_rt, across(rt, round, 0))
 ```
-
-<p class="forceBreak"></p>
+</div>
+<div style="float: right; width: 45%;">
 
 ```{r}
 mutate(blomkvist_rt, across(rt, ~round(., 0)))
 ```
+</div>
 
-## What is "`~.`"? {.columns-2}
+## What's "`~.`"? 
+
+<div style="float: left; width: 45%;">
 
 - "`~`": we want to make the position of the argument in function explicit.
 - "`.`": the location of the argument.
 - Always possible but necessary for operator functions (`>`, `==`, `^`, `+`) and when argument is not in first position of supplied function.
 
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 45%;">
 
 ```{r}
 mutate(blomkvist_rt, 
@@ -1233,7 +1313,7 @@ mutate(blomkvist_rt,
        across(age, ~.^2),   # operator
        across(rt, ~paste("RT is", .))) # position
 ```
-
+</div>
 
 ## Mutate data with `c_across()` {.smaller}
 
@@ -1354,28 +1434,37 @@ blomkvist_wide
 
 RT is distributed across 4 columns: useful for certain analyses but isn't tidy.
 
-## Pivoting data to long format | has never been easier {.columns-2}
+## Pivoting data to long format | has never been easier 
+
+<div style="float: left; width: 45%;">
 
 ```{r}
 blomkvist_wide
 ```
 
+</div>
 
-<p class="forceBreak"></p>
+<div style="float: right; width: 50%;">
+
 
 ```{r eval = T}
 pivot_longer(blomkvist_wide, cols = starts_with("rt_"))
 ```
 
+</div>
 
-## Pivoting data to long format {.columns-2}
+## Pivoting data to long format 
+
+<div style="float: left; width: 45%;">
+
 
 ```{r }
 pivot_longer(blomkvist_wide, cols = -id) # shorthand
 ```
 
+</div>
 
-<p class="forceBreak"></p>
+<div style="float: right; width: 45%;">
 
 ```{r}
 pivot_longer(blomkvist_wide, 
@@ -1384,10 +1473,11 @@ pivot_longer(blomkvist_wide,
              values_to = "rt")
 ```
 
+</div>
 
+## Pivoting data to long format 
 
-## Pivoting data to long format {.columns-2}
-
+<div style="float: left; width: 45%;">
 
 ```{r}
 pivot_longer(blomkvist_wide, 
@@ -1396,8 +1486,10 @@ pivot_longer(blomkvist_wide,
              values_to = "rt")
 ```
 
+</div>
 
-<p class="forceBreak"></p>
+<div style="float: right; width: 45%;">
+
 
 ```{r}
 pivot_longer(blomkvist_wide, 
@@ -1407,10 +1499,11 @@ pivot_longer(blomkvist_wide,
                           "dominant"), 
              names_pattern = "(.+)_(.+)_(.+)")
 ```
+</div>
 
+## Pivoting data to long format 
 
-## Pivoting data to long format {.columns-2}
-
+<div style="float: left; width: 45%;">
 
 ```{r}
 # Flexible naming pattern
@@ -1422,8 +1515,8 @@ pivot_longer(blomkvist_wide,
              names_pattern = "(.+)_(.+)_(.+)")
 ```
 
-
-<p class="forceBreak"></p>
+</div>
+<div style="float: right; width: 45%;">
 
 
 ```{r}
@@ -1435,7 +1528,7 @@ pivot_longer(blomkvist_wide,
                           "dominant"), 
              names_sep = "_")
 ```
-
+</div>
 
 ## Pivoting data back to wide format 
 
@@ -1447,14 +1540,18 @@ bk_long <- pivot_longer(blomkvist_wide,
 bk_long
 ```
 
-## Pivoting data back to wide format {.columns-2}
+## Pivoting data back to wide format
+
+<div style="float: left; width: 45%;">
+
 
 ```{r}
 bk_long
 ```
 
+</div>
 
-<p class="forceBreak"></p>
+<div style="float: right; width: 45%;">
 
 
 ```{r}
@@ -1462,30 +1559,40 @@ pivot_wider(bk_long,
             names_from = response_by, 
             values_from = rt)
 ```
+</div>
 
+## Pivoting data back to wide format 
 
-## Pivoting data back to wide format {.columns-2}
+<div style="float: left; width: 45%;">
 
 ```{r}
 bk_long
 ```
 
-<p class="forceBreak"></p>
+</div>
+<div style="float: right; width: 45%;">
+
 
 ```{r}
 pivot_wider(bk_long, 
             names_from = c(response_by, dominant), 
             values_from = rt)
 ```
+</div>
+
+## Pivoting data back to wide format 
 
 
-## Pivoting data back to wide format {.columns-2}
+<div style="float: left; width: 45%;">
 
 ```{r}
 bk_long
 ```
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 45%;">
+
 
 ```{r}
 pivot_wider(bk_long, 
@@ -1494,7 +1601,7 @@ pivot_wider(bk_long,
             names_prefix = "rt_")
 ```
 
-
+</div>
 
 ## Pivoting data
 
@@ -1524,20 +1631,26 @@ inner_join(data_1, data_2)
 ```
 
 
-## Combine data: `bind_cols()` {.columns-2}
+## Combine data: `bind_cols()` 
+
+<div style="float: left; width: 45%;">
 
 ```{r}
 bk_id_age <- select(blomkvist, id, age)
 bk_id_age
 ```
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 45%;">
+
 
 ```{r}
 bk_med_smoke <- select(blomkvist, medicine, smoker)
 bk_med_smoke
 ```
 
+</div>
 
 ## Combine data: `bind_cols()`
 
@@ -1585,21 +1698,28 @@ bk_sex <- select(blomkvist, sex, age)
 bk_sex_u50 <- filter(bk_sex, age < 50)
 ```
 
-## Create two example data sets {.columns-2}
+## Create two example data sets 
+
+<div style="float: left; width: 45%;">
 
 ```{r}
 bk_smoker_o40
 ```
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 45%;">
+
 
 ```{r}
 bk_sex_u50
 ```
 
+</div>
 
-## Combine data: `left_join()` {.columns-2}
+## Combine data: `left_join()` 
 
+<div style="float: left; width: 45%;">
 
 ```{r}
 # Keep all rows of bk_sex_u50
@@ -1608,14 +1728,19 @@ bk_joined <- left_join(bk_sex_u50,
 bk_joined
 ```
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 45%;">
+
 
 ```{r}
 range(bk_joined$age)
 ```
+</div>
 
+## Combine data: `right_join()` 
 
-## Combine data: `right_join()` {.columns-2}
+<div style="float: left; width: 45%;">
 
 ```{r}
 # Keep all rows of bk_smoker_o40
@@ -1624,14 +1749,20 @@ bk_joined <- right_join(bk_sex_u50,
 bk_joined
 ```
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 45%;">
 
 ```{r}
 range(bk_joined$age)
 ```
 
+</div>
 
-## Combine data: `full_join()` {.columns-2}
+## Combine data: `full_join()` 
+
+
+<div style="float: left; width: 45%;">
 
 ```{r}
 # Include all rows of both data sets
@@ -1640,13 +1771,19 @@ bk_joined <- full_join(bk_sex_u50,
 bk_joined
 ```
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 45%;">
 
 ```{r}
 range(bk_joined$age)
 ```
+</div>
 
-## Combine data: `inner_join()` {.columns-2}
+## Combine data: `inner_join()`
+
+
+<div style="float: left; width: 48%;">
 
 ```{r}
 # Include only info that is present in both data sets
@@ -1655,19 +1792,22 @@ bk_joined <- inner_join(bk_sex_u50,
 bk_joined
 ```
 
-<p class="forceBreak"></p>
+</div>
+
+<div style="float: right; width: 42%;">
 
 ```{r}
 range(bk_joined$age)
 ```
 
-## Combing data
-
 Continue with exercise 8
 
+</div>
 
 
-## The pipe: `%>%` {.columns-2}
+## The pipe: `%>%` 
+
+<div style="float: left; width: 45%;">
 
 - `%>%` moves or "pipes" the result forward into the next function  
 - `f(x)` is the same as `x %>% f()`  
@@ -1681,6 +1821,8 @@ data %>% select(myvar1, myvar2)
 
 *assumes first argument is data
 
+</div>
+<div style="float: right; width: 45%;">
 
 <p class="forceBreak"></p>
 
@@ -1688,8 +1830,11 @@ data %>% select(myvar1, myvar2)
 knitr::include_graphics("../gfx/pipe.png")
 ```
 
+</div>
 
-## The pipe: `%>%` {.columns-2}
+## The pipe: `%>%` 
+
+<div style="float: left; width: 45%;">
 
 
 ```{r eval = F}
@@ -1700,16 +1845,17 @@ data_3 <- third_step(data_3)
 data_4 <- fourth_step(data_4)
 
 # or
-first_step(
-    second_step(
-        third_step(
-            fourth_step(data)
+fourth_step(
+    third_step(
+        second_step(
+            first_step(data)
             )
           )
         )
 ```
 
-<p class="forceBreak"></p>
+</div>
+<div style="float: right; width: 45%;">
 
 ```{r eval = F}
 # Just do
@@ -1720,8 +1866,11 @@ data %>%
   fourth_step()
 ```
 
+</div>
 
-## The pipe: `%>%` {.columns-2}
+## The pipe: `%>%` 
+
+<div style="float: left; width: 45%;">
 
 
 ```{r}
@@ -1731,14 +1880,16 @@ bk_rts_flt <- filter(bk_rts, rt_hand_d > 1500)
 bk_rts_flt
 ```
 
-<p class="forceBreak"></p>
+</div>
+<div style="float: right; width: 45%;">
+
 
 ```{r}
 read_csv("../data/blomkvist.csv") %>% 
   select(id, starts_with("rt_")) %>% 
   filter(rt_hand_d > 1500)
 ```
-
+</div>
 
 ## The pipe: `%>%`
 
